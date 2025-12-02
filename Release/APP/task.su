@@ -1,0 +1,8 @@
+../APP/task.c:4:6:task_init	0	static
+../APP/task.c:16:6:task_reset_error	0	static
+../APP/task.c:22:5:task_set_state	0	static
+../APP/task.c:109:6:task_enter_state	24	static
+../APP/task.c:146:6:task_exit_state	24	static
+../APP/task.c:197:6:task_safety_task	0	static
+../APP/task.c:210:6:task_low_priority_task	16	static
+../APP/task.c:226:6:task_high_frequency_task	32	static

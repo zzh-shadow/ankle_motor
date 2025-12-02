@@ -1,0 +1,6 @@
+../APP/controller.c:3:5:controller_set_home	8	static,ignoring_inline_asm
+../APP/controller.c:25:6:controller_sync_callback	0	static
+../APP/controller.c:64:6:controller_update_input_pos_filter_gain	0	static
+../APP/controller.c:72:6:controller_init	0	static
+../APP/controller.c:78:6:controller_reset	8	static
+../APP/controller.c:107:6:controller_loop	24	static

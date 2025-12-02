@@ -1,0 +1,183 @@
+# 编译生成的二进制文件
+*.elf
+*.bin
+*.hex
+*.map
+*.lst
+*.out
+*.axf
+
+# 对象文件
+*.o
+*.obj
+
+# 依赖文件
+*.d
+
+# 汇编文件
+*.s
+*.su
+
+# 日志和临时文件
+*.log
+*.tmp
+*.bak
+*.swp
+
+# IDE相关
+# STM32CubeMX
+*.ioc
+*.bak
+*.log
+# Keil MDK
+*.uvguix.*
+*.uvoptx
+*.uvprojx
+*.uvopt
+*.uvproj
+*.plg
+*.dep
+*.lst
+*.tra
+*.htm
+*.lnp
+*.mpu
+*.sct
+*.scvd
+*.tid
+*.iex
+*.bak
+*.uvgui.*
+
+# IAR
+*.ewp
+*.ewd
+*.ewt
+*.ewp.xcl
+*.eww
+*.dep
+*.lst
+*.map
+*.r43
+*.pbd
+*.dbg
+*.bin
+*.hex
+*.srec
+*.elf
+*.o
+*.obj
+*.d
+*.hxl
+*.tmp
+*.plg
+*.log
+
+# SEGGER Embedded Studio
+*.emSession
+*.emProject
+*.emSolution
+*.emDebug
+*.emBuild
+*.emRun
+*.emSettings
+*.emBrowse
+*.emLaunch
+*.emMake
+*.emUser
+*.emWorkspace
+*.emCache
+*.emLog
+*.emTemp
+*.emBak
+
+# CMake/Makefile
+/build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# CLion
+.idea/
+*.iml
+
+# 其他常见文件夹
+Debug/
+debug/
+Release/
+release/
+bin/
+obj/
+out/
+build/
+*.DS_Store
+
+# 自动生成的 HAL/Drivers 文件夹（如不需版本管理可忽略）
+Drivers/
+Middlewares/
+
+# 生成的文档
+*.pdf
+*.doc
+*.docx
+
+# Python虚拟环境
+venv/
+__pycache__/
+*.pyc
+
+# 其他
+*.orig
+*.rej
+*.swo
+*.swd
+*.gch
+*.ipch
+*.db
+*.aps
+*.ncb
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.opendb
+*.user
+*.suo
+*.sln
+*.log
+*.tmp
+*.bak
+*.swp
+*.zip
+*.tar
+*.gz
+*.7z
+
+# 忽略 CubeMX 生成的 .mxproject 文件（如不需版本管理）
+*.mxproject
+
+# 忽略 STM32CubeIDE 的 .project/.cproject 文件（如不需版本管理）
+.project
+.cproject
+
+# 忽略 STM32CubeIDE 的 .settings 文件夹
+.settings/
+
+# 忽略 STM32CubeIDE 的 .mxproject 文件夹
+.mxproject/
+
+# 忽略 STM32CubeIDE 的 .launch 文件夹
+.launches/
+
+# 忽略 STM32CubeIDE 的 .metadata 文件夹
+.metadata/
+
+# 忽略 STM32CubeIDE 的 .stm32cubemx 文件夹
+.stm32cubemx/
+
+# 忽略 STM32CubeIDE 的 .stm32cubeide 文件夹
+.stm32cubeide/

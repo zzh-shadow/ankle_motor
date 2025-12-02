@@ -1,0 +1,3 @@
+../APP/open_loop.c:3:6:open_loop_start	24	static
+../APP/open_loop.c:10:6:open_loop_end	24	static
+../APP/open_loop.c:15:6:open_loop_loop	16	static

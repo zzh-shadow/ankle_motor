@@ -1,0 +1,5 @@
+../APP/usr_config.c:3:6:usr_config_set_default_config	8	static
+../APP/usr_config.c:54:5:USR_CONFIG_erease_config	0	static
+../APP/usr_config.c:59:5:usr_config_read_config	0	static
+../APP/usr_config.c:64:5:usr_config_write_config	0	static
+../APP/usr_config.c:69:5:usr_config_set_control_mode	0	static

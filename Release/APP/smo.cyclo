@@ -1,0 +1,3 @@
+../APP/smo.c:3:6:smo_init	1
+../APP/smo.c:28:6:smo_reset	1
+../APP/smo.c:48:6:smo_update	2

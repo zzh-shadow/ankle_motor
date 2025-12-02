@@ -1,0 +1,9 @@
+../APP/app_pubinclude.h:64:21:read_vbus	4	static
+../APP/task.c:4:6:task_init	16	static
+../APP/task.c:16:6:task_reset_error	16	static
+../APP/task.c:22:5:task_set_state	32	static
+../APP/task.c:135:6:task_enter_state	24	static
+../APP/task.c:181:6:task_exit_state	24	static
+../APP/task.c:240:6:task_safety_task	24	static
+../APP/task.c:253:6:task_low_priority_task	40	static
+../APP/task.c:275:6:task_high_frequency_task	24	static

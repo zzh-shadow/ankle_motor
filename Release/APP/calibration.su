@@ -1,0 +1,3 @@
+../APP/calibration.c:4:6:calibration_start	0	static
+../APP/calibration.c:12:6:calibration_end	0	static
+../APP/calibration.c:19:6:calibration_loop	40	static

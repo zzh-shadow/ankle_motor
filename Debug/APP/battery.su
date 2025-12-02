@@ -1,0 +1,14 @@
+../APP/battery.c:4:5:battery_send	32	static
+../APP/battery.c:20:5:battery_read_message	24	static
+../APP/battery.c:31:5:battery_read_voltage	24	static
+../APP/battery.c:42:5:battery_set_press_time	32	static
+../APP/battery.c:55:5:battery_led_control	32	static
+../APP/battery.c:69:5:battery_check_handle	16	static
+../APP/battery.c:78:5:battery_data_process	56	static
+../APP/battery.c:136:5:battery_rece	32	static
+../APP/battery.c:181:6:battery_tx_cp	24	static
+../APP/battery.c:195:6:battery_rx_idle	24	static
+../APP/battery.c:219:6:battery_rx_half	24	static
+../APP/battery.c:234:6:battery_rx_cp	24	static
+../APP/battery.c:251:6:battery_loop	16	static
+../APP/battery.c:257:6:battery_init	16	static

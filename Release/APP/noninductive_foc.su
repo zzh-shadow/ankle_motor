@@ -1,0 +1,5 @@
+../APP/noninductive_foc.c:4:6:noninductive_FOC_update_current_ctrl_gain	0	static
+../APP/noninductive_foc.c:11:6:noninductive_FOC_init	16	static
+../APP/noninductive_foc.c:28:6:noninductive_FOC_arm	16	static,ignoring_inline_asm
+../APP/noninductive_foc.c:52:6:noninductive_FOC_disarm	16	static,ignoring_inline_asm
+../APP/noninductive_foc.c:74:6:noninductive_FOC_current	88	static

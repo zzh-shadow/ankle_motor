@@ -1,0 +1,6 @@
+../APP/foc.c:4:6:FOC_update_current_ctrl_gain	0	static
+../APP/foc.c:10:6:FOC_init	0	static
+../APP/foc.c:24:6:FOC_arm	8	static,ignoring_inline_asm
+../APP/foc.c:48:6:FOC_disarm	8	static,ignoring_inline_asm
+../APP/foc.c:68:6:FOC_voltage	48	static
+../APP/foc.c:104:6:FOC_current	80	static

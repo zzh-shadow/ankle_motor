@@ -1,0 +1,4 @@
+../BSP/dwt.c:13:6:DWT_Tick_TimerInit	3
+../BSP/dwt.c:24:6:DWT_Tick_TimerClear	1
+../BSP/dwt.c:29:10:DWT_Tick_TimerGet	1
+../BSP/dwt.c:38:7:DWT_Time_Run	3

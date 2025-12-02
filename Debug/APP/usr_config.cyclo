@@ -1,0 +1,5 @@
+../APP/usr_config.c:3:6:usr_config_set_default_config	1
+../APP/usr_config.c:58:5:USR_CONFIG_erease_config	1
+../APP/usr_config.c:63:5:usr_config_read_config	1
+../APP/usr_config.c:68:5:usr_config_write_config	1
+../APP/usr_config.c:73:5:usr_config_set_control_mode	1

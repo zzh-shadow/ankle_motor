@@ -1,0 +1,12 @@
+../APP/main_communication.c:3:5:main_comm_send	2
+../APP/main_communication.c:19:5:main_comm_response	2
+../APP/main_communication.c:45:5:main_comm_check_handle	6
+../APP/main_communication.c:60:5:main_comm_data_process	10
+../APP/main_communication.c:127:5:main_comm_rece	8
+../APP/main_communication.c:175:5:main_comm_data_deal	30
+../APP/main_communication.c:230:6:main_communication_tx_cp	2
+../APP/main_communication.c:244:6:main_communication_rx_idle	4
+../APP/main_communication.c:268:6:main_communication_rx_half	2
+../APP/main_communication.c:284:6:main_communication_rx_cp	2
+../APP/main_communication.c:300:6:main_communication_loop	2
+../APP/main_communication.c:309:6:main_communication_init	1

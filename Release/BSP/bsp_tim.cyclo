@@ -1,0 +1,7 @@
+../BSP/bsp_tim.c:5:6:set_a_duty	1
+../BSP/bsp_tim.c:12:6:set_b_duty	1
+../BSP/bsp_tim.c:19:6:set_c_duty	1
+../BSP/bsp_tim.c:25:6:switch_on_pwm	2
+../BSP/bsp_tim.c:41:6:switch_off_pwm	2
+../BSP/bsp_tim.c:53:6:turn_on_low_sides_pwm	2
+../BSP/bsp_tim.c:69:6:bsp_tim_init	1

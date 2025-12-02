@@ -1,0 +1,4 @@
+../BSP/bsp_gpio.c:3:6:enable_motor_drive	2
+../BSP/bsp_gpio.c:13:6:enable_boost	2
+../BSP/bsp_gpio.c:23:6:enable_encoder	2
+../BSP/bsp_gpio.c:33:6:test_gpio	2

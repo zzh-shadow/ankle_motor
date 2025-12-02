@@ -1,0 +1,6 @@
+../APP/foc.c:4:6:FOC_update_current_ctrl_gain	1
+../APP/foc.c:10:6:FOC_init	1
+../APP/foc.c:24:6:FOC_arm	2
+../APP/foc.c:48:6:FOC_disarm	2
+../APP/foc.c:68:6:FOC_voltage	3
+../APP/foc.c:104:6:FOC_current	3

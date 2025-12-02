@@ -1,0 +1,2 @@
+../APP/encoder.c:4:6:encoder_init	0	static
+../APP/encoder.c:11:6:encoder_loop	0	static

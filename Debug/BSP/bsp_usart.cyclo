@@ -1,0 +1,6 @@
+../BSP/bsp_usart.c:12:6:bsp_usart_init	1
+../BSP/bsp_usart.c:34:6:bsp_uart_idle_callback	4
+../BSP/bsp_usart.c:48:6:HAL_UART_TxCpltCallback	4
+../BSP/bsp_usart.c:61:6:HAL_UART_RxHalfCpltCallback	4
+../BSP/bsp_usart.c:74:6:HAL_UART_RxCpltCallback	4
+../BSP/bsp_usart.c:87:6:HAL_UART_ErrorCallback	4
