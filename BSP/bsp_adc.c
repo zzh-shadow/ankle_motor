@@ -4,27 +4,18 @@
 float bsp_read_iphase_a(struct ADC_SENSOR_s *adc_sensor)
 {
     int adc_value = adc_sensor->ADC_a->Instance->JDR1 - adc_sensor->phase_a_adc_offest;
-    // if(ABS(adc_value) <= 5) {
-    //     adc_value = 0;
-    // }
     return (float)adc_value * SAMPLE_CURR_CON_FACTOR;
 }
 
 float bsp_read_iphase_b(struct ADC_SENSOR_s *adc_sensor)
 {
     int adc_value = adc_sensor->ADC_b->Instance->JDR2 - adc_sensor->phase_b_adc_offset;
-    // if(ABS(adc_value) <= 5) {
-    //     adc_value = 0;
-    // }
     return (float)adc_value * SAMPLE_CURR_CON_FACTOR;
 }
 
 float bsp_read_iphase_c(struct ADC_SENSOR_s *adc_sensor)
 {
     int adc_value = adc_sensor->ADC_c->Instance->JDR3 - adc_sensor->phase_c_adc_offset;
-    // if(ABS(adc_value) <= 5) {
-    //     adc_value = 0;
-    // }
     return (float)adc_value * SAMPLE_CURR_CON_FACTOR;
 }
 

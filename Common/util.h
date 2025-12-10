@@ -14,7 +14,7 @@
 #define TWO_BY_SQRT3            (2.0f * 0.57735026919f)
 #define SQRT3_BY_2                (0.86602540378f)
 
-#define SQ(x)        ((x)*(x))
+// #define SQ(x)        ((x)*(x))
 #define ABS(x)         ( (x)>0?(x):-(x) ) 
 #define MAX(x, y)     (((x) > (y)) ? (x) : (y))
 #define MIN(x, y)     (((x) < (y)) ? (x) : (y))

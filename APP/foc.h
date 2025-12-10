@@ -19,8 +19,7 @@ void FOC_update_current_ctrl_gain(struct FOC_s* Foc, struct USR_CONFIG_s* UsrCon
 void FOC_arm(struct FOC_s* Foc, struct ENABLE_s* enable, struct PWM_GEN_s* PWMGen);
 void FOC_disarm(struct FOC_s* Foc, struct ENABLE_s* enable ,struct PWM_GEN_s* PWMGen);
 void FOC_voltage(struct FOC_s* Foc,float Vd_set, float Vq_set, float phase,struct PWM_GEN_s* PWMGen);
-void FOC_current(struct FOC_s* Foc,float Id_set, float Iq_set, float phase, float phase_vel,
-    struct PWM_GEN_s* PWMGen,struct TASK_s* task,struct USR_CONFIG_s* usr_config,struct ENCODER_s* encoder);
+void FOC_current(struct MOTOR_s* motor,float id_set, float iq_set, float phase, float phase_vel);
 
 
 #ifdef __cplusplus

@@ -55,9 +55,6 @@ int traj_plan(struct TRAJ_s* traj,float t_pos,float s_pos, float t_vel, float s_
         traj->acc_distance = 0.5 * traj->cur_accel * SQ(traj->accel_time);
         traj->dec_distance = 0.5 * traj->cur_decel * SQ(traj->decel_time);
 
-        // traj->acc_distance_inc = traj->acc_distance / traj->accel_time * traj->dir_flg;
-        // traj->dec_distance_inc = traj->dec_distance / traj->decel_time * traj->dir_flg;
-        // traj->keep_distance_inc = 0;
 
         traj->cur_accel = traj->cur_accel * traj->dir_flg;
         traj->cur_decel = -traj->cur_decel * traj->dir_flg;
@@ -75,10 +72,6 @@ int traj_plan(struct TRAJ_s* traj,float t_pos,float s_pos, float t_vel, float s_
         traj->keep_distance = traj->peak_vel * traj->keep_time;
         traj->acc_distance = 0.5 * traj->cur_accel * SQ(traj->accel_time);
         traj->dec_distance = 0.5 * traj->cur_decel * SQ(traj->decel_time);
-
-        // traj->acc_distance_inc = traj->acc_distance / traj->accel_time * traj->dir_flg;
-        // traj->dec_distance_inc = traj->dec_distance / traj->decel_time * traj->dir_flg;
-        // traj->keep_distance_inc = traj->keep_distance / traj->keep_time * traj->dir_flg;
 
         traj->cur_accel = traj->peak_vel / traj->accel_time * traj->dir_flg;
         traj->cur_decel = -traj->peak_vel / traj->decel_time * traj->dir_flg;
@@ -102,14 +95,14 @@ void traj_eval(struct TRAJ_s* traj,struct ENCODER_s* encoder,struct CONTROLLER_s
         float target_pos_deltal = traj->input_pos - traj->pos_set_point;
         float deltal_vel = traj->vel_set - traj->vel_set_point;
         float max_accel = controller->input_pos_filter_kp * target_pos_deltal + controller->input_pos_filter_ki * deltal_vel;
-        traj->vel_set_point += encoder->time_diff * max_accel;
-        traj->pos_set_point += encoder->time_diff * traj->vel_set_point;
+        traj->vel_set_point += LOW_TASK_TIME_DIFF * max_accel;
+        traj->pos_set_point += LOW_TASK_TIME_DIFF * traj->vel_set_point;
         float pos_err = traj->pos_set_point - controller->pos_meas;
         controller->vel_des = usr_config->pos_gain * pos_err;
     }
     else if((deltal_pos * traj->dir_flg) > traj->dec_distance + traj->keep_distance) {
         if(ABS(traj->vel_set) < traj->peak_vel) {
-            traj->vel_set += traj->cur_accel * encoder->time_diff;
+            traj->vel_set += traj->cur_accel * LOW_TASK_TIME_DIFF;
         }
         else {
             traj->vel_set = traj->peak_vel * traj->dir_flg;
@@ -121,7 +114,7 @@ void traj_eval(struct TRAJ_s* traj,struct ENCODER_s* encoder,struct CONTROLLER_s
         controller->vel_des = traj->vel_set;
     }
     else {
-        traj->vel_set += traj->cur_decel * encoder->time_diff;
+        traj->vel_set += traj->cur_decel * LOW_TASK_TIME_DIFF;
         controller->vel_des = traj->vel_set;
         if(ABS(traj->vel_set) < usr_config->target_velcity_window || (deltal_pos * traj->dir_flg) < usr_config->target_position_window) {
             traj->stop_flg = true;

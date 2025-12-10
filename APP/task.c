@@ -264,16 +264,7 @@ void task_low_priority_task(struct MOTOR_s *motor)
         }
         motor->task.statusword_old.errors.errors_code = motor->task.statusword_new.errors.errors_code;
     }
-    // motor->encoder.loop(&motor->encoder,&motor->usrconfig,&motor->task);
-    // if(motor->task.fsm.state == RUN) {
-    //     motor->controller.loop(motor);
-    // }
 
-    motor->main_comm.loop(&motor->main_comm,&motor->usrconfig,&motor->task,&motor->encoder,&motor->controller,&motor->enable);
-}
-
-void task_high_frequency_task(struct MOTOR_s *motor)
-{
     if(motor->task.fsm.state_next != motor->task.fsm.state){
         motor->task.exit_state(motor);
         if(motor->task.fsm.state_next_ready){
@@ -281,21 +272,41 @@ void task_high_frequency_task(struct MOTOR_s *motor)
             motor->task.enter_state(motor);
         }
     }
-    motor->encoder.loop(&motor->encoder,&motor->usrconfig,&motor->task);
 
-    motor->foc.v_bus = read_vbus();
-    UTILS_LP_FAST(motor->foc.v_bus_filt,motor->foc.v_bus,0.05f);
+    if(motor->task.fsm.state == RUN || motor->task.fsm.state == ZERO_CAILBRATION) {
+        motor->controller.loop(motor);
+    }
+    if(motor->task.fsm.state != BOOT_UP) {
+        motor->foc.i_sq = 0.6666667 * (SQ(motor->foc.i_a) + SQ(motor->foc.i_b) + SQ(motor->foc.i_c));
+        if(motor->foc.i_sq > SQ(motor->usrconfig.protect_over_current)) {
+            motor->foc.over_current_time++;
+            if(motor->foc.over_current_time >= 10) {
+                motor->foc.disarm(&motor->foc,&motor->enable,&motor->pwm_gen);
+                motor->task.statecmd = IDLE;
+                motor->task.statusword_new.errors.over_phasecurrent = 1;
+
+            }
+        }
+        else if(motor->foc.over_current_time > 0){
+            motor->foc.over_current_time--;
+        }
+    }
 
     motor->task.test_error_code = motor->task.statusword_new.errors.errors_code;
+
+    motor->main_comm.loop(&motor->main_comm,&motor->usrconfig,&motor->task,&motor->encoder,&motor->controller,&motor->enable);
+    
+}
+
+void task_high_frequency_task(struct MOTOR_s *motor)
+{
+    motor->encoder.loop(&motor->encoder,&motor->usrconfig,&motor->task);
+    motor->foc.v_bus = read_vbus();
 
     motor->foc.i_a = motor->adc_sensor.read_iphase_c(&motor->adc_sensor);
     motor->foc.i_b = motor->adc_sensor.read_iphase_b(&motor->adc_sensor);
     motor->foc.i_c = -(motor->foc.i_a + motor->foc.i_b);
     
-
-    motor->foc.i_sq = 0.6666667 * (SQ(motor->foc.i_a) + SQ(motor->foc.i_b) + SQ(motor->foc.i_c));
-    // UTILS_LP_FAST(motor->foc.i_sq_filt,motor->foc.i_sq,0.01f);
-
     switch(motor->task.fsm.state)
     {
         case BOOT_UP:
@@ -313,53 +324,17 @@ void task_high_frequency_task(struct MOTOR_s *motor)
         case ZERO_CAILBRATION:
         {
             motor->zero_cailbration.loop(motor);
-            motor->controller.loop(motor);
-            if(motor->foc.i_sq > motor->usrconfig.protect_over_current) {
-                motor->foc.over_current_time++;
-                if(motor->foc.over_current_time >= 10) {
-                    motor->foc.disarm(&motor->foc,&motor->enable,&motor->pwm_gen);
-                    motor->task.statecmd = IDLE;
-                    motor->task.statusword_new.errors.over_phasecurrent = 1;
-                    motor->task.set_state(&motor->task,&motor->enable,&motor->usrconfig);
-                }
-            }
-            else if(motor->foc.over_current_time > 0) {
-                motor->foc.over_current_time--;
-            }
+            motor->foc.current(motor,0, motor->controller.i_q_set, motor->encoder.phase, motor->encoder.phase_vel);
             break;
         }
         case RUN:
         {
-            motor->controller.loop(motor);
-            if(motor->foc.i_sq > motor->usrconfig.protect_over_current) {
-                motor->foc.over_current_time++;
-                if(motor->foc.over_current_time >= 10) {
-                    motor->foc.disarm(&motor->foc,&motor->enable,&motor->pwm_gen);
-                    motor->task.statecmd = IDLE;
-                    motor->task.statusword_new.errors.over_phasecurrent = 1;
-                    motor->task.set_state(&motor->task,&motor->enable,&motor->usrconfig);
-                }
-            }
-            else if(motor->foc.over_current_time > 0) {
-                motor->foc.over_current_time--;
-            }
+            motor->foc.current(motor,0, motor->controller.i_q_set, motor->encoder.phase, motor->encoder.phase_vel);
             break;
         }
         case OPEN_LOOP_RUN:
         {
             motor->open_loop.loop(motor);
-            if(motor->foc.i_sq > motor->usrconfig.protect_over_current) {
-                motor->foc.over_current_time++;
-                if(motor->foc.over_current_time >= 100) {
-                    motor->foc.disarm(&motor->foc,&motor->enable,&motor->pwm_gen);
-                    motor->task.statecmd = IDLE;
-                    motor->task.statusword_new.errors.over_phasecurrent = 1;
-
-                }
-            }
-            else if(motor->foc.over_current_time > 0){
-                motor->foc.over_current_time--;
-            }
             break;
         }
         case ERRORCLEAR:

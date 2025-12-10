@@ -87,20 +87,17 @@ int encoder_data_deal(struct ENCODER_s* encoder , struct USR_CONFIG_s* usr_confi
 		if (encoder->interpolation < 0.0f) encoder->interpolation = 0.0f;
     }
 
-    // encoder->vel_estimate_counts = (float)diff / encoder->time_diff;
     float interpolated_enc = encoder->one_pos_count - usr_config->encoder_offset + encoder->interpolation;
     while(interpolated_enc > ENCODER_CPR_F) interpolated_enc -= ENCODER_CPR_F;
     while(interpolated_enc < 0) interpolated_enc += ENCODER_CPR_F;
 
     float shadow_count_f = encoder->shadow_count;
-    float turns = shadow_count_f / ENCODER_CPR_F;
-    float residual = shadow_count_f - turns * ENCODER_CPR_F;
 
-    encoder->pos = turns + residual / ENCODER_CPR_F;
-    UTILS_LP_MOVING_AVG_APPROX(encoder->vel,(encoder->vel_estimate_counts / ENCODER_CPR_F),5);
+    encoder->pos = shadow_count_f / ENCODER_CPR_F;
+    encoder->vel = encoder->vel_estimate_counts / ENCODER_CPR_F;
     encoder->phase = (interpolated_enc * M_2PI * usr_config->motor_pole_pairs) / ENCODER_CPR_F;
     
-    encoder->phase_count = turns * M_2PI;
+    encoder->phase_count = encoder->pos * M_2PI;
     encoder->phase_vel = encoder->vel * M_2PI * usr_config->motor_pole_pairs;
     
     return 0;
@@ -135,7 +132,6 @@ int encoder_data_process(struct ENCODER_s* encoder , uint8_t* data , uint16_t le
     rece_crc = (ENCODER_CRC_t *)(data + sizeof(ENCODER_HANDLE_t) + sizeof(ENCODER_POS_DATA_t));
     crc = APP_Math_CRC8_StaticTable(data,sizeof(ENCODER_HANDLE_t) + sizeof(ENCODER_POS_DATA_t));
 
-
     if(len < pack_data_length) 
     {
         return RECE_DATA_PROCESS_WAIT;
@@ -152,30 +148,6 @@ int encoder_data_process(struct ENCODER_s* encoder , uint8_t* data , uint16_t le
             encoder->one_pos_count = encoder_data->ABS0 | encoder_data->ABS1 << 8 | encoder_data->ABS2 << 16;
             encoder->status_flg = handle->SF;
             encoder->more_pos_count = encoder_data->MBS0 | encoder_data->MBS1 << 8 | encoder_data->MBS2 << 16;
-            if(encoder->first_flg) {
-                encoder->time_diff = ENCODER_TIME_DIFF;
-                encoder->last_time = DWT_Time_Run();
-                encoder->first_flg = false;
-            }
-            else {
-                encoder->cur_time = DWT_Time_Run();
-                encoder->time_diff = encoder->cur_time - encoder->last_time;
-                if(encoder->time_diff > 0.003) {
-                    encoder->time_diff_count++;
-                }
-                else if(encoder->time_diff < 0) {
-                    encoder->time_diff = ENCODER_TIME_DIFF;
-                    encoder->time_diff_count++;
-                }
-                else if(encoder->time_diff_count > 0) {
-                    encoder->time_diff_count--;
-                }
-                if(encoder->time_diff_count > 5) {
-                    encoder->time_diff_count = 0;
-                    task->statusword_new.errors.encode_error = true;
-                }
-                encoder->last_time = encoder->cur_time;
-            }
             encoder_data_deal(encoder,usr_config,task);
             encoder->last_one_pos_count = encoder->one_pos_count;
             break;
@@ -316,6 +288,7 @@ void encoder_rx_cp(struct ENCODER_s* encoder)
 void encoder_init(struct ENCODER_s* encoder , struct ENABLE_s* enable)
 {
     encoder->tc_flg = true;
+    encoder->rx_flg = false;
     encoder->rx_idx = 0;
     encoder->shadow_count = 0;
     encoder->pos_cpr_count = 0;
@@ -327,8 +300,7 @@ void encoder_init(struct ENCODER_s* encoder , struct ENABLE_s* enable)
     encoder->interpolation = 0;
     encoder->one_pos_count = 0;
     encoder->last_one_pos_count = 0;
-    encoder->first_flg = true;
-    encoder->time_diff = ENCODER_TIME_DIFF;
+    encoder->time_diff = CURRENT_MEASURE_PERIOD;
     encoder->ele_phase = 0;
     HAL_GPIO_WritePin(enable->encoder_enable_gpio, enable->encoder_enable_pin, GPIO_PIN_SET);
 

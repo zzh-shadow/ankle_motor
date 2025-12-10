@@ -1,6 +1,6 @@
 ../BSP/bsp_adc.c:4:7:bsp_read_iphase_a	1
-../BSP/bsp_adc.c:13:7:bsp_read_iphase_b	1
-../BSP/bsp_adc.c:22:7:bsp_read_iphase_c	1
-../BSP/bsp_adc.c:32:5:pwmc_current_reading_polarization	10
-../BSP/bsp_adc.c:76:6:HAL_ADCEx_InjectedConvCpltCallback	4
-../BSP/bsp_adc.c:92:6:bsp_adc_init	1
+../BSP/bsp_adc.c:10:7:bsp_read_iphase_b	1
+../BSP/bsp_adc.c:16:7:bsp_read_iphase_c	1
+../BSP/bsp_adc.c:23:5:pwmc_current_reading_polarization	10
+../BSP/bsp_adc.c:67:6:HAL_ADCEx_InjectedConvCpltCallback	4
+../BSP/bsp_adc.c:83:6:bsp_adc_init	1

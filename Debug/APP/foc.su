@@ -3,4 +3,4 @@
 ../APP/foc.c:28:6:FOC_arm	24	static,ignoring_inline_asm
 ../APP/foc.c:61:6:FOC_disarm	24	static,ignoring_inline_asm
 ../APP/foc.c:84:6:FOC_voltage	64	static
-../APP/foc.c:120:6:FOC_current	96	static
+../APP/foc.c:120:6:FOC_current	88	static

@@ -10,7 +10,6 @@ extern "C" {
 #define ENCODER_CPR             (int)0x800000       //捷昌 0x800000  恒立 0x20000
 #define ENCODER_CPR_DOUBLE      (ENCODER_CPR * 2)
 #define ENCODER_CPR_F           (8388608.0f)        //捷昌 8388608.0f  恒立 131072.0f
-#define ENCODER_CPR_F_DOUBLE    (ENCODER_CPR_F * 2)
 #define ENCODER_CPR_DIV         ((ENCODER_CPR)>>1)
 
 #define ENCODER_TIME_DIFF       (0.00005f)

@@ -32,6 +32,7 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "app_pubinclude.h"
+#include "arm_math.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -58,14 +59,15 @@ void Error_Handler(void);
 
 /* Private defines -----------------------------------------------------------*/
 #define TIM_DEADTIME_CLOCK 80
-#define TIM_PWM_HZ 20000
-#define TIM_PERIOD_CLOCK 2000
+#define TIM_PWM_HZ 10000
+#define TIM_PERIOD_CLOCK 4000
 #define INIT_PWM TIM_PERIOD_CLOCK
-#define PWM_ADC_INJECT_TIME TIM_PERIOD_CLOCK-1
+#define PWM_ADC_INJECT_TIME 3960
 
 /* USER CODE BEGIN Private defines */
 extern volatile uint32_t SystickCount;
 extern volatile uint64_t TasktickCount;
+void sys_tick_call_back(void);
 
 /* USER CODE END Private defines */
 

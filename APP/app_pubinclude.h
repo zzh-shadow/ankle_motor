@@ -49,6 +49,9 @@ extern "C" {
 #define MAX_MOTOR_POLE_PAIRS    5U
 #define SAMPLES_PER_PPAIR       128U
 
+#define LOW_TASK_TIME_DIFF     0.001f
+
+
 #define RECE_DATA_PROCESS_FAIL       0
 #define RECE_DATA_PROCESS_SUCCESS    1
 #define RECE_DATA_PROCESS_WAIT       2
@@ -376,7 +379,6 @@ typedef struct ENCODER_s {
     uint32_t rx_idx;
 
     uint8_t status_flg;
-    uint8_t first_flg;
     int32_t one_pos_count;
     int32_t last_one_pos_count;
     int16_t more_pos_count;
@@ -485,10 +487,6 @@ typedef struct TRAJ_s {
     float keep_distance;
     float dec_distance;
 
-    float acc_distance_inc;
-    float keep_distance_inc;
-    float dec_distance_inc;
-
     float keep_time;
 
     float peak_vel;
@@ -589,8 +587,7 @@ typedef struct ENABLE_s{
     void (*arm)(struct FOC_s* Foc,struct ENABLE_s* enable, struct PWM_GEN_s* PWMGen);
     void (*disarm)(struct FOC_s* Foc,struct ENABLE_s* enable ,struct PWM_GEN_s* PWMGen);
     void (*voltage)(struct FOC_s* Foc, float Vd_set, float Vq_set, float phase,struct PWM_GEN_s* PWMGen);
-    void (*current)(struct FOC_s* Foc, float Id_set, float Iq_set, float phase, float phase_vel,
-            struct PWM_GEN_s* PWMGen,struct TASK_s* task,struct USR_CONFIG_s* usr_config,struct ENCODER_s* encoder);	
+    void (*current)(struct MOTOR_s* motor,float id_set, float iq_set, float phase, float phase_vel);	
 	
 } FOC_t;
 

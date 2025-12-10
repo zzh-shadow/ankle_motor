@@ -38,12 +38,12 @@ void usr_config_set_default_config(struct USR_CONFIG_s *usr_config)
     usr_config->position_filter_bw = 200.0f;        //位置模式滤波带宽
     
     usr_config->profile_velocity = 50/usr_config->encoder_gr;     //规划器速度限制
-    usr_config->profile_accel = 100/usr_config->encoder_gr;        //规划器加速度限制
-    usr_config->profile_decel = 100/usr_config->encoder_gr;        //规划器减速度限制
+    usr_config->profile_accel = 200/usr_config->encoder_gr;        //规划器加速度限制
+    usr_config->profile_decel = 200/usr_config->encoder_gr;        //规划器减速度限制
 
     usr_config->protect_under_voltage = 18;      //欠压保护值
     usr_config->protect_over_voltage = 27;       //过压保护值
-    usr_config->protect_over_current = SQ(8.4);       //过流保护值
+    usr_config->protect_over_current = 8.4;       //过流保护值
     usr_config->protect_i_bus_max = 1.0;          //母线电流保护值
     usr_config->protect_i_leak_max = 1.0;         //漏电流保护值
 

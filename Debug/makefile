@@ -69,8 +69,8 @@ all: main-build
 main-build: huaiguanjie.elf secondary-outputs
 
 # 工具调用
-huaiguanjie.elf huaiguanjie.map: $(OBJS) $(USER_OBJS) D:\daima\huaiguanjie\STM32L496RGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "huaiguanjie.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\daima\huaiguanjie\STM32L496RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="huaiguanjie.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+huaiguanjie.elf huaiguanjie.map: $(OBJS) $(USER_OBJS) D:\daima\huaiguanjie_bat\ankle_motor\STM32L496RGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "huaiguanjie.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\daima\huaiguanjie_bat\ankle_motor\STM32L496RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="huaiguanjie.map" -Wl,--gc-sections -static -L../Middlewares/ST/ARM/DSP/Lib --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo '已结束构建目标： $@'
 	@echo ' '
 

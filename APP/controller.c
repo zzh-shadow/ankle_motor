@@ -67,7 +67,7 @@ void controller_sync_callback(struct CONTROLLER_s* controller,struct USR_CONFIG_
 void controller_update_input_pos_filter_gain(struct CONTROLLER_s* controller,float bw)
 {
     float bandwidth = MIN(bw, 0.25f * PWM_FREQUENCY);
-    controller->input_pos_filter_ki = 1.0f * bandwidth;
+    controller->input_pos_filter_ki = 0.5f * bandwidth;
     controller->input_pos_filter_kp = 10.0 * bandwidth;
 }
 
@@ -119,7 +119,7 @@ void controller_loop(struct MOTOR_s* motor)
         switch(motor->usrconfig.control_mode){
             case CONTROL_MODE_TORQUE_RAMP:
             {
-                float max_step_size = ABS(CONTROLLER_DIFF * motor->usrconfig.torque_ramp_rate);
+                float max_step_size = ABS(LOW_TASK_TIME_DIFF * motor->usrconfig.torque_ramp_rate);
                 float full_step = motor->controller.input_torque - motor->controller.torque_setpoint;
                 float step = CLAMP(full_step , -max_step_size, max_step_size);
                 motor->controller.torque_setpoint += step;
@@ -128,7 +128,7 @@ void controller_loop(struct MOTOR_s* motor)
 
             case CONTROL_MODE_VELOCITY_RAMP:
             {
-                float max_step_size = ABS(CONTROLLER_DIFF * motor->usrconfig.velocity_ramp_rate);
+                float max_step_size = ABS(LOW_TASK_TIME_DIFF * motor->usrconfig.velocity_ramp_rate);
                 if(motor->task.fsm.state == RUN) {
                     if(motor->usrconfig.invert_motor_dir == 1){
                         if(((motor->encoder.pos + motor->usrconfig.position_limit ) <= 0.1) && (motor->controller.input_velocity < 0 )){
@@ -166,8 +166,8 @@ void controller_loop(struct MOTOR_s* motor)
                 float delta_vel = motor->controller.input_velocity - motor->controller.vel_setpoint;
                 float accel = motor->controller.input_pos_filter_kp * delta_pos + motor->controller.input_pos_filter_ki * delta_vel;
 
-                motor->controller.vel_setpoint += CONTROLLER_DIFF * accel;
-                motor->controller.pos_setpoint += CONTROLLER_DIFF * motor->controller.vel_setpoint;
+                motor->controller.vel_setpoint += LOW_TASK_TIME_DIFF * accel;
+                motor->controller.pos_setpoint += LOW_TASK_TIME_DIFF * motor->controller.vel_setpoint;
                 
                 if(motor->task.statusword_new.status.target_reached == 0) {
                     if(ABS(motor->controller.input_position - motor->controller.pos_meas) < motor->usrconfig.target_position_window){
@@ -234,7 +234,12 @@ void controller_loop(struct MOTOR_s* motor)
         float Tmin = (-30 - motor->encoder.vel) * motor->usrconfig.vel_gain;
         motor->controller.torque = CLAMP(motor->controller.torque,Tmin,Tmax);
     }
-
+    if(motor->foc.i_sq < (SQ(motor->controller.torque_limit) - 1)) {
+        motor->controller.torque_limit = motor->usrconfig.protect_over_current * motor->usrconfig.torque_constant;
+    }
+    else {
+        motor->controller.torque_limit = motor->usrconfig.current_limit * motor->usrconfig.torque_constant;
+    }
     if (ABS(motor->controller.torque) > motor->controller.torque_limit){
         motor->controller.torque = CLAMP(motor->controller.torque,-motor->controller.torque_limit,motor->controller.torque_limit);
         motor->task.statusword_new.status.current_limit_active = 1;
@@ -252,11 +257,11 @@ void controller_loop(struct MOTOR_s* motor)
             motor->controller.vel_integrator_torque *= 0.99f;
         }
         else{
-            motor->controller.vel_integrator_torque += (motor->usrconfig.vel_integrator_gain * CONTROLLER_DIFF) * motor->controller.v_err;
+            motor->controller.vel_integrator_torque += (motor->usrconfig.vel_integrator_gain * LOW_TASK_TIME_DIFF) * motor->controller.v_err;
         }
     }
 
     motor->controller.i_q_set = motor->controller.torque / motor->usrconfig.torque_constant;
     
-    motor->foc.current(&motor->foc,0, motor->controller.i_q_set, motor->encoder.phase, motor->encoder.phase_vel,&motor->pwm_gen,&motor->task,&motor->usrconfig,&motor->encoder);
+    // motor->foc.current(&motor->foc,0, motor->controller.i_q_set, motor->encoder.phase, motor->encoder.phase_vel,&motor->pwm_gen,&motor->task,&motor->usrconfig,&motor->encoder);
 }

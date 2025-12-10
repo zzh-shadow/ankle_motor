@@ -233,7 +233,6 @@ void calibration_loop(struct MOTOR_s *motor)
                 motor->calibration.calib_step = CS_DIR_PP_START;
             }
         }
-
         default:
             break;
     }

@@ -121,16 +121,39 @@ MOTOR_t motor[NUM_MOTORS] = {
     },
   },
 };
-float max_pos = 0;
-float target_pos = 0;
-float min_pos = -10;
-uint32_t time_test_count = 0;
 
-float test_t_pos = 5;
-float test_t_vel = 30;
-float test_t_acc = 50;
-float test_t_dec = 50;
-float test_time = 2;
+void sys_tick_call_back(void) 
+{
+  if(TasktickCount - App_period_1ms >= 1){
+    App_period_1ms = TasktickCount;
+    for(int i = 0;i < NUM_MOTORS;i++){
+      if(motor[i].debug_flag) {
+        motor[i].debug_flag = 0;
+
+        motor[i].task.statecmd = motor[i].debug_state;
+        motor[i].task.set_state(&motor[0].task,&motor[0].enable,&motor[0].usrconfig);
+        motor[i].controller.sync_callback(&motor[i].controller,&motor[i].usrconfig,&motor[i].task);
+      }
+      motor[i].task.low_priority_task(&motor[i]);
+    }
+  }
+
+  if(TasktickCount - App_period_5ms >= 5){
+    App_period_5ms = TasktickCount;
+  }
+
+  if(TasktickCount - App_period_1s >= 1000) {
+    App_period_1s = TasktickCount;
+    // motor[0].battery.loop(&motor->battery);
+    if(motor[0].task.fsm.state == BOOT_UP) {
+      motor[0].task.statecmd = IDLE;
+      motor[0].usrconfig.control_mode = 2;
+      motor[0].task.set_state(&motor[0].task,&motor[0].enable,&motor[0].usrconfig);
+      motor[0].controller.sync_callback(&motor[0].controller,&motor[0].usrconfig,&motor[0].task);
+    }
+  }
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -211,61 +234,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    if(TasktickCount - App_period_1ms >= 1){
-      App_period_1ms = TasktickCount;
-      for(int i = 0;i < NUM_MOTORS;i++){
-        if(motor[i].debug_flag) {
-          motor[i].debug_flag = 0;
-
-          motor[i].task.statecmd = motor[i].debug_state;
-          motor[i].task.set_state(&motor[0].task,&motor[0].enable,&motor[0].usrconfig);
-          motor[i].controller.sync_callback(&motor[i].controller,&motor[i].usrconfig,&motor[i].task);
-        }
-        motor[i].task.low_priority_task(&motor[i]);
-      }
-    }
-
-    if(TasktickCount - App_period_5ms >= 5){
-      App_period_5ms = TasktickCount;
-      // if(motor[0].task.fsm.state == RUN && motor[0].task.statusword_new.status.target_reached == 1){
-      //   time_test_count++;
-      //   if(time_test_count > 10) {
-      //     if(ABS(motor[0].encoder.pos - target_pos) < 0.04) {
-      //       if(target_pos == max_pos) {
-      //         target_pos = min_pos;
-      //       } else {
-      //         target_pos = max_pos;
-      //       }
-      //     }
-      //     motor[0].controller.input_position_buffer = target_pos;
-      //     motor[0].controller.sync_callback(&motor[0].controller,&motor[0].usrconfig,&motor[0].task);
-      //   }
-      // }
-      // else if(time_test_count > 0) {
-      //   time_test_count--;
-      // }
-    }
-
-    if(TasktickCount - App_period_1s >= 1000) {
-      App_period_1s = TasktickCount;
-      motor[0].battery.loop(&motor->battery);
-      if(motor[0].task.fsm.state == BOOT_UP) {
-        motor[0].task.statecmd = IDLE;
-        motor[0].usrconfig.control_mode = 2;
-        motor[0].task.set_state(&motor[0].task,&motor[0].enable,&motor[0].usrconfig);
-        motor[0].controller.sync_callback(&motor[0].controller,&motor[0].usrconfig,&motor[0].task);
-      }
-      // else if(motor[0].task.fsm.state == IDLE && motor[0].usrconfig.calib_valid == false) {
-      //   motor[0].task.statecmd = CALIBRATION;
-      //   motor[0].task.set_state(&motor[0].task,&motor[0].enable,&motor[0].usrconfig);
-      //   motor[0].controller.sync_callback(&motor[0].controller,&motor[0].usrconfig,&motor[0].task);
-      // }
-      // else if(motor[0].task.fsm.state == IDLE && motor[0].usrconfig.calib_valid == true) {
-      //   motor[0].task.statecmd = RUN;
-      //   motor[0].task.set_state(&motor[0].task,&motor[0].enable,&motor[0].usrconfig);
-      //   motor[0].controller.sync_callback(&motor[0].controller,&motor[0].usrconfig,&motor[0].task);
-      // }
-    }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

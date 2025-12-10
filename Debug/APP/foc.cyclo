@@ -3,4 +3,4 @@
 ../APP/foc.c:28:6:FOC_arm	2
 ../APP/foc.c:61:6:FOC_disarm	2
 ../APP/foc.c:84:6:FOC_voltage	3
-../APP/foc.c:120:6:FOC_current	17
+../APP/foc.c:120:6:FOC_current	8

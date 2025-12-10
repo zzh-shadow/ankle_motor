@@ -33,15 +33,19 @@ APP/usr_config.o: ../APP/usr_config.c ../APP/usr_config.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
- D:/daima/huaiguanjie/APP/app_pubinclude.h ../Core/Inc/adc.h \
+ D:/daima/huaiguanjie_bat/ankle_motor/APP/app_pubinclude.h \
+ ../Middlewares/ST/ARM/DSP/Inc/arm_math.h \
+ ../Drivers/CMSIS/Include/cmsis_compiler.h ../Core/Inc/adc.h \
  ../Core/Inc/main.h ../Core/Inc/tim.h ../Core/Inc/gpio.h \
- ../Core/Inc/usart.h D:/daima/huaiguanjie/BSP/dwt.h \
- D:/daima/huaiguanjie/Common/util.h D:/daima/huaiguanjie/BSP/bsp_adc.h \
- D:/daima/huaiguanjie/BSP/bsp_tim.h D:/daima/huaiguanjie/BSP/bsp_gpio.h \
- D:/daima/huaiguanjie/BSP/bsp_usart.h ../APP/calibration.h \
- ../APP/zero_cailbration.h ../APP/controller.h ../APP/encoder.h \
- ../APP/foc.h ../APP/open_loop.h ../APP/task.h ../APP/trap_traj.h \
- ../APP/battery.h ../APP/main_communication.h
+ ../Core/Inc/usart.h D:/daima/huaiguanjie_bat/ankle_motor/BSP/dwt.h \
+ D:/daima/huaiguanjie_bat/ankle_motor/Common/util.h \
+ D:/daima/huaiguanjie_bat/ankle_motor/BSP/bsp_adc.h \
+ D:/daima/huaiguanjie_bat/ankle_motor/BSP/bsp_tim.h \
+ D:/daima/huaiguanjie_bat/ankle_motor/BSP/bsp_gpio.h \
+ D:/daima/huaiguanjie_bat/ankle_motor/BSP/bsp_usart.h \
+ ../APP/calibration.h ../APP/zero_cailbration.h ../APP/controller.h \
+ ../APP/encoder.h ../APP/foc.h ../APP/open_loop.h ../APP/task.h \
+ ../APP/trap_traj.h ../APP/battery.h ../APP/main_communication.h
 ../APP/usr_config.h:
 ../APP/app_pubinclude.h:
 ../Core/Inc/main.h:
@@ -78,18 +82,20 @@ APP/usr_config.o: ../APP/usr_config.c ../APP/usr_config.h \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
-D:/daima/huaiguanjie/APP/app_pubinclude.h:
+D:/daima/huaiguanjie_bat/ankle_motor/APP/app_pubinclude.h:
+../Middlewares/ST/ARM/DSP/Inc/arm_math.h:
+../Drivers/CMSIS/Include/cmsis_compiler.h:
 ../Core/Inc/adc.h:
 ../Core/Inc/main.h:
 ../Core/Inc/tim.h:
 ../Core/Inc/gpio.h:
 ../Core/Inc/usart.h:
-D:/daima/huaiguanjie/BSP/dwt.h:
-D:/daima/huaiguanjie/Common/util.h:
-D:/daima/huaiguanjie/BSP/bsp_adc.h:
-D:/daima/huaiguanjie/BSP/bsp_tim.h:
-D:/daima/huaiguanjie/BSP/bsp_gpio.h:
-D:/daima/huaiguanjie/BSP/bsp_usart.h:
+D:/daima/huaiguanjie_bat/ankle_motor/BSP/dwt.h:
+D:/daima/huaiguanjie_bat/ankle_motor/Common/util.h:
+D:/daima/huaiguanjie_bat/ankle_motor/BSP/bsp_adc.h:
+D:/daima/huaiguanjie_bat/ankle_motor/BSP/bsp_tim.h:
+D:/daima/huaiguanjie_bat/ankle_motor/BSP/bsp_gpio.h:
+D:/daima/huaiguanjie_bat/ankle_motor/BSP/bsp_usart.h:
 ../APP/calibration.h:
 ../APP/zero_cailbration.h:
 ../APP/controller.h:

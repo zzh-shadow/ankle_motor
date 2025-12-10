@@ -180,20 +180,21 @@ int main_comm_data_deal(struct MAIN_COMM_s* main_comm,struct USR_CONFIG_s* usr_c
     //     return 0;
     // }
     if(task->statusword_new.errors.errors_code == 0) {
-        if(task->fsm.state == IDLE && usr_config->calib_valid == false) {
+        if(task->fsm.state == IDLE && usr_config->calib_valid == false && task->fsm.state_next != CALIBRATION) {
             task->statecmd = CALIBRATION;
             task->set_state(task,enable,usr_config);
         }
-        else if(task->fsm.state == IDLE && usr_config->calib_valid == true && usr_config->zero_calib_valid == false) {
+        else if(task->fsm.state == IDLE && task->fsm.state_next != ZERO_CAILBRATION && usr_config->calib_valid == true && usr_config->zero_calib_valid == false) {
             task->statecmd = ZERO_CAILBRATION;
             task->set_state(task,enable,usr_config);
         }
-        else if(task->fsm.state == IDLE && usr_config->calib_valid == true && usr_config->zero_calib_valid == true) {
+        else if(task->fsm.state == IDLE && task->fsm.state_next != RUN && usr_config->calib_valid == true && usr_config->zero_calib_valid == true) {
             usr_config->control_mode = main_comm->target_cw;
             task->statecmd = RUN;
             task->set_state(task,enable,usr_config);
         }
-        else if(task->fsm.state == RUN && usr_config->calib_valid == true && usr_config->zero_calib_valid == true && usr_config->control_mode != main_comm->target_cw) {
+        else if(task->fsm.state == RUN && task->fsm.state_next != IDLE &&usr_config->calib_valid == true && usr_config->zero_calib_valid == true 
+            && usr_config->control_mode != main_comm->target_cw) {
             task->statecmd = IDLE;
             task->set_state(task,enable,usr_config);
         }
@@ -216,8 +217,6 @@ int main_comm_data_deal(struct MAIN_COMM_s* main_comm,struct USR_CONFIG_s* usr_c
             controller->input_position_buffer = CLAMP(main_comm->target_pos,0,usr_config->position_limit);
             controller->input_velocity_buffer = CLAMP(main_comm->target_vel,-usr_config->velocity_limit,usr_config->velocity_limit);
         }
-        // controller->input_position_buffer = main_comm->target_pos;
-        // controller->input_velocity_buffer = main_comm->target_vel;
         controller->input_time_buffer = main_comm->control_time;
         controller->sync_callback(controller,usr_config,task);
     }

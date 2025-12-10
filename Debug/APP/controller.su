@@ -3,4 +3,4 @@
 ../APP/controller.c:67:6:controller_update_input_pos_filter_gain	24	static
 ../APP/controller.c:75:6:controller_init	16	static
 ../APP/controller.c:81:6:controller_reset	32	static
-../APP/controller.c:113:6:controller_loop	80	static
+../APP/controller.c:113:6:controller_loop	72	static

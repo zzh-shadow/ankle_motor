@@ -7,7 +7,6 @@ extern "C" {
 
 #include "app_pubinclude.h"
 
-#define CONTROLLER_DIFF     0.001f
 
 typedef enum {
     CONTROL_MODE_TORQUE_RAMP        = 0,

@@ -4,9 +4,9 @@
 ../APP/main_communication.c:60:5:main_comm_data_process	48	static
 ../APP/main_communication.c:127:5:main_comm_rece	56	static
 ../APP/main_communication.c:175:5:main_comm_data_deal	24	static
-../APP/main_communication.c:230:6:main_communication_tx_cp	24	static
-../APP/main_communication.c:244:6:main_communication_rx_idle	24	static
-../APP/main_communication.c:268:6:main_communication_rx_half	24	static
-../APP/main_communication.c:284:6:main_communication_rx_cp	24	static
-../APP/main_communication.c:300:6:main_communication_loop	32	static
-../APP/main_communication.c:309:6:main_communication_init	16	static
+../APP/main_communication.c:229:6:main_communication_tx_cp	24	static
+../APP/main_communication.c:243:6:main_communication_rx_idle	24	static
+../APP/main_communication.c:267:6:main_communication_rx_half	24	static
+../APP/main_communication.c:283:6:main_communication_rx_cp	24	static
+../APP/main_communication.c:299:6:main_communication_loop	32	static
+../APP/main_communication.c:308:6:main_communication_init	16	static
